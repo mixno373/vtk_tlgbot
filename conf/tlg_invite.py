@@ -1,17 +1,8 @@
-import os
-import asyncio
-
-from datetime import datetime, timedelta
-
-import sqlite3 as sql
-from sqlite3 import Error
+from datetime import datetime
 
 from telebot import types
 
-from PIL import Image, ImageChops, ImageFont, ImageDraw, ImageSequence, ImageFilter, GifImagePlugin
-from PIL.GifImagePlugin import getheader, getdata
-from functools import partial
-from io import BytesIO
+from PIL import Image, ImageFont, ImageDraw
 
 from .const import *
 from .sql import *
