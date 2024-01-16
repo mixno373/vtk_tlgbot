@@ -1,0 +1,17 @@
+
+.gitattributes
+.vscode/sftp.json
+.vscode/ftp-sync.json
+assets/cossacks_just_logo_1500x1500.png
+assets/cossacks_logo.png
+assets/cossacks_under_red.png
+assets/logo_cs.png
+assets/polk_irk_logo.png
+assets/polk_irk_under_red.png
+assets/polk_irk_under_white.png
+assets/polk_just_logo_1500x1500.png
+*.pyc
+conf/polk_image_handler.py
+config/settings.py
+polkrf_tlgbot.py
+cossacks_tlgbot.py
