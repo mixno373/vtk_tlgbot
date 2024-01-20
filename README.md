@@ -18,30 +18,30 @@
 
 
 ## Техническое задание
-Frontend 
-> Bot (telegram)
+### Frontend 
+*** Bot (telegram) ***
 > - ***
->
-> Команды бота
+
+*** Команды бота ***
 > - /client - Информация о клиенте (поиск, добавить, изменить, удалить <- "reaction button" кнопки)
 > - /order - Создание новой заявки
 > - /calendar - Просмотр заявок в виде календаря
 
 
 ### Backend  
-***Database (Postgres)***  
+*** Database (Postgres) ***  
 • crm_clients
 | Name | Type | Description |
 | --- | --- | --- |
 | uid | int | Идентификатор |
 | name | varchar(50) | Название |
 
-> Database (SQLite)
+*** Database (SQLite) ***
 > - +++++++++
 > - +++++++++
 > - +++++++++
-> 
-> Bot (python telebot)
+
+*** Bot (python telebot) ***
 > - +++++++++
 > - +++++++++
 > - +++++++++
