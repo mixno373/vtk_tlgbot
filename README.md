@@ -29,11 +29,13 @@ Frontend
 
 
 Backend
-> Database (Postgres)
-> - +++++++++
-> - +++++++++
-> - +++++++++
->
+**Database (Postgres)**
+*crm_clients*
+| Name          | Type          | Description   |
+| ------------- | ------------- | ------------- |
+| uid           | int           | Идентификатор |
+| name          | varchar(50)   | Название      |
+
 > Database (SQLite)
 > - +++++++++
 > - +++++++++
