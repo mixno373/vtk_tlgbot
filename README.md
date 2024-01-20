@@ -28,13 +28,13 @@ Frontend
 > - /calendar - Просмотр заявок в виде календаря
 
 
-Backend
-**Database (Postgres)**
+Backend  
+**Database (Postgres)**  
 *crm_clients*
-| Name          | Type          | Description   |
-| ------------- | ------------- | ------------- |
-| uid           | int           | Идентификатор |
-| name          | varchar(50)   | Название      |
+| Name | Type | Description |
+| --- | --- |
+| uid | int | Идентификатор |
+| name | varchar(50) | Название |
 
 > Database (SQLite)
 > - +++++++++
