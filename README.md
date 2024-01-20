@@ -34,20 +34,20 @@
 | Name | Type | Default value | Description |
 | --- | --- | --- | --- |
 | uid | int | Autoinc primary key | Идентификатор |
-| surname | varchar(20) | '' | Фамилия |
+| surname | varchar(20) | ' ' | Фамилия |
 | name | varchar(20) | Not null | Имя |
-| midname | varchar(20) | '' | Отчество |
+| midname | varchar(20) | ' ' | Отчество |
 | phone | varchar(12) | Not null | Номер телефона |
-| secondphone | varchar(12) | '' | Дополнительный номер телефона |
-| description | varchar(100) | '' | Примечание |
-| from | varchar(25) | '' | Откуда узнал |
+| secondphone | varchar(12) | ' ' | Дополнительный номер телефона |
+| description | varchar(100) | ' ' | Примечание |
+| from | varchar(25) | ' ' | Откуда узнал |
   
 • crm_orders - Таблица заявок
 | Name | Type | Description |
 | --- | --- | --- |
 | uid | int | Идентификатор |
 | client_uid | int | Autoinc primary key | UID клиента -> crm_clients |
-| date | timestamp | timezone('utc'::text, now()) | Дата игры |
+| date | timestamp | timezone('utc', now()) | Дата игры |
 | ..... | ..... | ..... | ..... |
 
 ***Database (SQLite)***
