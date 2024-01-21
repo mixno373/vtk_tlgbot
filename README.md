@@ -43,9 +43,9 @@
 | from | varchar(25) | ' ' | Откуда узнал |
   
 • crm_orders - Таблица заявок
-| Name | Type | Description |
-| --- | --- | --- |
-| uid | int | Идентификатор |
+| Name | Type | Default value | Description |
+| --- | --- | --- | --- |
+| uid | int | Autoinc primary key | Идентификатор |
 | client_uid | int | Autoinc primary key | UID клиента -> crm_clients |
 | date | timestamp | timezone('utc', now()) | Дата игры с элементом времени начала |
 | gametime | int | 3600 | Время игры, сек. |
