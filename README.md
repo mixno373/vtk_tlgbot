@@ -54,7 +54,7 @@
 | players | int | 1 | Количество игроков |
 | polygon | varchar | 'arena' | Площадка игры. [arena, park, forest] |
 | gametype | varchar | 'birthday' | Тип игры. [game, birthday, quest] |
-| gifts | varchar | 'bandana' | Тип подарков. [bandana, bullets, dogtag, snood] |
+| gifts | varchar | 'bandana' | Тип подарков. [bandana, bullets, dogtag, snood, without] |
 | ..... | ..... | ..... | ..... |
 
 ***Database (SQLite)***
