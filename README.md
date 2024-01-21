@@ -47,7 +47,14 @@
 | --- | --- | --- |
 | uid | int | Идентификатор |
 | client_uid | int | Autoinc primary key | UID клиента -> crm_clients |
-| date | timestamp | timezone('utc', now()) | Дата игры |
+| date | timestamp | timezone('utc', now()) | Дата игры с элементом времени начала |
+| gametime | int | 3600 | Время игры, сек. |
+| resttime | int | 3600 | Время зоны отдыха после игры, сек. |
+| restroom | int | 1 | Номер зоны отдыха (1 либо 2. 0 при отсутствии) |
+| players | int | 1 | Количество игроков |
+| polygon | varchar | 'arena' | Площадка игры. [arena, park, forest] |
+| gametype | varchar | 'birthday' | Тип игры. [game, birthday, quest] |
+| gifts | varchar | 'bandana' | Тип подарков. [bandana, bullets, dogtag, snood] |
 | ..... | ..... | ..... | ..... |
 
 ***Database (SQLite)***
