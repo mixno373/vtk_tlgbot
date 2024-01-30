@@ -121,6 +121,39 @@ async def command_invite(message):
           btn2 = types.KeyboardButton("Братск")
           markup.add(btn1, btn2)
           await bot.send_message(message.chat.id, text="Здравствуйте, для начала выберите свой город", reply_markup=markup)
+          
+          
+@bot.message_handler(commands=['client'])
+async def command_client(message):
+    if not message.chat.type == "private":
+        return
+    # Проверка на аккаунт менеджера по ID
+    if not message.from_user.id in VTK_MANAGERS_IDS:
+        return
+    
+    await bot.send_message(message.chat.id, text="Информация о клиенте (поиск, добавить, изменить, удалить <- \"reaction button\" кнопки)")
+    
+
+@bot.message_handler(commands=['order'])
+async def command_order(message):
+    if not message.chat.type == "private":
+        return
+    # Проверка на аккаунт менеджера по ID
+    if not message.from_user.id in VTK_MANAGERS_IDS:
+        return
+    
+    await bot.send_message(message.chat.id, text="Создание новой заявки")
+    
+
+@bot.message_handler(commands=['calendar'])
+async def command_calendar(message):
+    if not message.chat.type == "private":
+        return
+    # Проверка на аккаунт менеджера по ID
+    if not message.from_user.id in VTK_MANAGERS_IDS:
+        return
+    
+    await bot.send_message(message.chat.id, text="Просмотр заявок в виде календаря")
 
 
 @bot.callback_query_handler(func=MyTranslationCalendar.func())

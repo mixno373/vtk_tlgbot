@@ -21,6 +21,13 @@ BEST_PLAYERS_FILENAME = "Best_Players_{polygon_uid}_{lang}_{sort}_{theme_name}_{
 
 VTK_TLG_LT_LOGCHAT_ID = -4059829948
 
+VTK_MANAGERS_IDS = [
+  773985834,    # Минеева С.В.
+  773211221,    # Минеев М.В.
+  1008371645,   # Минеев Н.В.
+  544779397,    # Минеев В.В.
+]
+
 HTTP_METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH']
 
 admins_list = [
