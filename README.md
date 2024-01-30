@@ -46,7 +46,7 @@
 | Name | Type | Default value | Description |
 | --- | --- | --- | --- |
 | uid | int | Autoinc primary key | Идентификатор |
-| client_uid | int | Autoinc primary key | UID клиента -> crm_clients |
+| client_uid | int | 0 | UID клиента -> crm_clients |
 | date | timestamp | timezone('utc', now()) | Дата игры с элементом времени начала |
 | gametime | int | 3600 | Время игры, сек. |
 | resttime | int | 3600 | Время зоны отдыха после игры, сек. |
