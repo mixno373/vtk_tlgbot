@@ -11,6 +11,7 @@ from io import BytesIO
 
 from conf.const import *
 from conf.tlg_invite import *
+from conf.crm_cog import *
 from config.settings import settings
 
 
@@ -169,6 +170,12 @@ async def cal(c):
         
         
 
+'''
+Немного дополнил ридми, начал расписывать логику работы команд, но пока особо не приступил.
+
+TODO!!! требуется продумать логику работы "on_message". get_invuser_status - это конечно хорошо, но теперь нужен статус поверх статуса работы над приглашением.
+Нужен глобальный статус обработчика сообщений юзера - использует ли он какой-то из сервисов (приглашения, црм или никакой). В зависимости от этого уже строить дальше логику "on_message".
+'''
 @bot.message_handler(content_types=['text'])
 async def func(message):
     if message.chat.type != "private":
@@ -176,8 +183,10 @@ async def func(message):
     
     status = False
     
-    if message.text.lower() == "invite":
-        return await command_invite(message)
+    if message.text.lower() == "invite":    return await command_invite(message)
+    if message.text.lower() == "client":    return await command_client(message)
+    if message.text.lower() == "order":     return await command_order(message)
+    if message.text.lower() == "calendar":  return await command_calendar(message)
     
     if message.text == "Ангарск":
         return await makeinvite_1_city(bot, message, "Ангарск", 'vtk')
