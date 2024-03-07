@@ -43,7 +43,9 @@
 | secondphone | varchar(12) | ' ' | Дополнительный номер телефона |
 | description | varchar(100) | ' ' | Примечание |
 | from | varchar(25) | ' ' | Откуда узнал |
-  
+	
+
+
 • crm_orders - Таблица заявок
 | Name | Type | Default value | Description |
 | --- | --- | --- | --- |
@@ -58,6 +60,8 @@
 | gametype | varchar(10) | 'birthday' | Тип игры. [game, birthday, quest] |
 | gifts | varchar(10) | 'bandana' | Тип подарков. [bandana, bullets, dogtag, snood, without] |
 | ..... | ..... | ..... | ..... |
+	
+
 
 ***Database (SQLite)***  
 Используется для хранения временной информации о диалоге с пользователем:  
@@ -71,9 +75,11 @@
 | status | text | '-' | Статус диалога [-, invite, crm, crm_client, crm_order...] |
 | data | text | '-' | Дополнительные данные. Например, идентификатор клиента для обновления данных... |
 
-> - add_dialog_data() - Добавить данные диалога (создать/обновить)
-> - get_dialog_status() - Получить статус диалога и дополнительные данные (при наличии)
-> - set_dialog_status() - Установить статус диалога и дополнительные данные (при наличии)
+> - add_dialog_data(chat_id, status: str='-') - Добавить данные диалога (создать/обновить)
+> - get_dialog_status(chat_id) - Получить статус диалога и дополнительные данные (при наличии)
+> - set_dialog_status(chat_id, status, data='') - Установить статус диалога и дополнительные данные (при наличии)
+	
+
 
 ***Bot (python telebot)***
 > - +++++++++
