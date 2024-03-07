@@ -101,4 +101,4 @@ def set_dialog_status**(chat_id, status, data='')
 > - В кнопке "Найти" работает поиск по номеру телефона (основной либо дополнительный) и по имени/фамилии/отчеству/общей слейке
   
  Пример работы функции /client -> "Найти":
-![График](https://github.com/mixno373/vtk_tlgbot/blob/main/reports/client_find_1.png?raw=true)
+![График](https://github.com/mixno373/vtk_tlgbot/blob/main/reports/client_find_1.png?raw=true)  
