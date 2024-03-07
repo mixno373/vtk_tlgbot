@@ -77,13 +77,13 @@
 
 ```python
 # Добавить данные диалога (создать/обновить)
-def add_dialog_data(chat_id, status: str='-')
+def add_dialog_data(chat_id, status: str='-'): pass
 
 # Получить статус диалога и дополнительные данные (при наличии)
-def get_dialog_status(chat_id)  
+def get_dialog_status(chat_id): pass
 
 # Установить статус диалога и дополнительные данные (при наличии)
-def set_dialog_status**(chat_id, status, data='')  
+def set_dialog_status**(chat_id, status, data=''): pass
 ```
 	
 
