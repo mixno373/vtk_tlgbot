@@ -388,13 +388,15 @@ def get_invuser_info(chat_id):
 #            Dialog Statuses
 # ----------------------------------------
 
+# Добавить данные диалога (создать/обновить)
 def add_dialog_data(chat_id, status: str='-'):
     sql_insert({"chat_id": str(chat_id), "status": status}, "DialogStatuses")
     sql_update({
                 "status": status
             }, "DialogStatuses", where={"chat_id": str(chat_id)})
     
-    
+
+# Получить статус диалога и дополнительные данные (при наличии)
 def get_dialog_status(chat_id):
     data = sql_select_one([
             "status",      # 0
@@ -408,6 +410,7 @@ def get_dialog_status(chat_id):
     return (data[0], data[1])
 
 
+# Установить статус диалога и дополнительные данные (при наличии)
 def set_dialog_status(chat_id, status, data=''):
     sql_update({"status": str(status), "data": str(data)}, "DialogStatuses", where={"chat_id": str(chat_id)})
     
