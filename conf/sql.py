@@ -385,6 +385,34 @@ def get_invuser_info(chat_id):
 
 
 # ----------------------------------------
+#            Dialog Statuses
+# ----------------------------------------
+
+def add_dialog_data(chat_id, status: str='-'):
+    sql_insert({"chat_id": str(chat_id), "status": status}, "DialogStatuses")
+    sql_update({
+                "status": status
+            }, "DialogStatuses", where={"chat_id": str(chat_id)})
+    
+    
+def get_dialog_status(chat_id):
+    data = sql_select_one([
+            "status",      # 0
+            "data"         # 1
+        ], "DialogStatuses", where={"chat_id": str(chat_id)})
+
+    if not data:
+        add_dialog_data(chat_id, '-')
+        return ('-', '')
+        
+    return (data[0], data[1])
+
+
+def set_dialog_status(chat_id, status, data=''):
+    sql_update({"status": str(status), "data": str(data)}, "DialogStatuses", where={"chat_id": str(chat_id)})
+    
+
+# ----------------------------------------
 #            Start Database
 # ----------------------------------------
 
@@ -400,6 +428,13 @@ sql_create_invite_users_table = """ CREATE TABLE IF NOT EXISTS InviteUsers (
                                     date_ts INTEGER DEFAULT 0,
                                     club TEXT DEFAULT "vtk"
                                 ); """
+                                
+sql_create_dialog_statuses_table = """ CREATE TABLE IF NOT EXISTS DialogStatuses (
+                                    uid INTEGER PRIMARY KEY,
+                                    chat_id TEXT UNIQUE,
+                                    status TEXT DEFAULT "-",
+                                    data TEXT DEFAULT ""
+                                ); """
 
 
 
@@ -407,3 +442,4 @@ sql_create_invite_users_table = """ CREATE TABLE IF NOT EXISTS InviteUsers (
 conn = create_connection(os.getcwd() + r"/conf/database.db")
 assert conn != None, "Can't connect to Database"
 create_table(conn, sql_create_invite_users_table)
+create_table(conn, sql_create_dialog_statuses_table)

@@ -2,12 +2,38 @@ from datetime import datetime
 
 from telebot import types
 
+from telegram_bot_calendar import LSTEP_tr
+
 from PIL import Image, ImageFont, ImageDraw
 
 from .const import *
 from .sql import *
 
 
+
+async def process_dialog_invite(bot, message, d_status, data):
+    status = False
+    
+    if message.text == "Ангарск":
+        return await makeinvite_1_city(bot, message, "Ангарск", 'vtk')
+    elif message.text == "Братск":
+        return await makeinvite_1_city(bot, message, "Братск", 'br')
+    else:
+        status = get_invuser_status(message.chat.id)
+        print(f"Invite status: {status}")
+        
+    if status and status != "complete":
+        if status == "imeninnik_name":
+            return await makeinvite_2_imeninnikname(bot, message)
+        if status == "date":
+            calendar, step = MyTranslationCalendar().build()
+            bot.send_message(message.chat.id,
+                            f"Выберите {LSTEP_tr[step]}",
+                            reply_markup=calendar)
+        if status == "minutes":
+            return await makeinvite_3_minutes(bot, message)
+        if status == "name":
+            return await makeinvite_4_image(bot, message)
 
 async def makeinvite_1_city(bot, message, city: str, club: str='vtk'):
     add_invuser_city(f"{message.chat.first_name} {message.chat.last_name} @{message.chat.username}", message.chat.id, city, club)

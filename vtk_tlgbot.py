@@ -10,13 +10,16 @@ from PIL import Image
 from io import BytesIO
 
 from conf.const import *
+from conf.classes import PostgresqlDatabase
 from conf.tlg_invite import *
-from conf.crm_cog import *
+from conf.crm import *
+from conf.sql import *
 from config.settings import settings
 
 
 
 bot = AsyncTeleBot(settings["vtk_tlg_token"], parse_mode=None)
+bot.db = PostgresqlDatabase(dsn=settings["psql"])
 
 
 @bot.message_handler(content_types=['new_chat_members'])
@@ -117,11 +120,13 @@ async def command_start(message):
 @bot.message_handler(commands=['invite'])
 async def command_invite(message):
     if message.chat.type == "private":
-          markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-          btn1 = types.KeyboardButton("Ангарск")
-          btn2 = types.KeyboardButton("Братск")
-          markup.add(btn1, btn2)
-          await bot.send_message(message.chat.id, text="Здравствуйте, для начала выберите свой город", reply_markup=markup)
+        set_dialog_status(message.chat.id, 'invite')
+        
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton("Ангарск")
+        btn2 = types.KeyboardButton("Братск")
+        markup.add(btn1, btn2)
+        await bot.send_message(message.chat.id, text="Здравствуйте, для начала выберите свой город", reply_markup=markup)
           
           
 @bot.message_handler(commands=['client'])
@@ -132,7 +137,14 @@ async def command_client(message):
     if not message.from_user.id in VTK_MANAGERS_IDS:
         return
     
-    await bot.send_message(message.chat.id, text="Информация о клиенте (поиск, добавить, изменить, удалить <- \"reaction button\" кнопки)")
+    set_dialog_status(message.chat.id, 'crm_client')
+    
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("Найти")
+    btn2 = types.KeyboardButton("Добавить")
+    markup.add(btn1, btn2)
+    
+    await bot.send_message(message.chat.id, text="Информация о клиенте", reply_markup=markup)
     
 
 @bot.message_handler(commands=['order'])
@@ -142,6 +154,8 @@ async def command_order(message):
     # Проверка на аккаунт менеджера по ID
     if not message.from_user.id in VTK_MANAGERS_IDS:
         return
+    
+    set_dialog_status(message.chat.id, 'crm_order')
     
     await bot.send_message(message.chat.id, text="Создание новой заявки")
     
@@ -153,6 +167,8 @@ async def command_calendar(message):
     # Проверка на аккаунт менеджера по ID
     if not message.from_user.id in VTK_MANAGERS_IDS:
         return
+    
+    set_dialog_status(message.chat.id, 'crm_calendar')
     
     await bot.send_message(message.chat.id, text="Просмотр заявок в виде календаря")
 
@@ -173,41 +189,40 @@ async def cal(c):
 '''
 Немного дополнил ридми, начал расписывать логику работы команд, но пока особо не приступил.
 
-TODO!!! требуется продумать логику работы "on_message". get_invuser_status - это конечно хорошо, но теперь нужен статус поверх статуса работы над приглашением.
-Нужен глобальный статус обработчика сообщений юзера - использует ли он какой-то из сервисов (приглашения, црм или никакой). В зависимости от этого уже строить дальше логику "on_message".
+TODO!!! требуется продумать логику работы "on_message". get_invuser_status - это конечно хорошо,
+но теперь нужен статус поверх статуса работы над приглашением.
+Нужен глобальный статус обработчика сообщений юзера - использует ли он какой-то из сервисов (приглашения, црм или никакой).
+В зависимости от этого уже строить дальше логику "on_message".
 '''
 @bot.message_handler(content_types=['text'])
 async def func(message):
     if message.chat.type != "private":
         return
     
-    status = False
+    d_status = '-'
     
     if message.text.lower() == "invite":    return await command_invite(message)
     if message.text.lower() == "client":    return await command_client(message)
     if message.text.lower() == "order":     return await command_order(message)
     if message.text.lower() == "calendar":  return await command_calendar(message)
     
-    if message.text == "Ангарск":
-        return await makeinvite_1_city(bot, message, "Ангарск", 'vtk')
-    elif message.text == "Братск":
-        return await makeinvite_1_city(bot, message, "Братск", 'br')
-    else:
-        status = get_invuser_status(message.chat.id)
-        print(f"Status: {status}")
-        
-    if status and status != "complete":
-        if status == "imeninnik_name":
-            return await makeinvite_2_imeninnikname(bot, message)
-        if status == "date":
-            calendar, step = MyTranslationCalendar().build()
-            bot.send_message(message.chat.id,
-                            f"Выберите {LSTEP_tr[step]}",
-                            reply_markup=calendar)
-        if status == "minutes":
-            return await makeinvite_3_minutes(bot, message)
-        if status == "name":
-            return await makeinvite_4_image(bot, message)
+    
+    # Получаем статус диалога с пользователем
+    d_status, data = get_dialog_status(message.chat.id)
+    print(f"Status: {d_status}")
+    
+    if d_status == "invite":
+        return await process_dialog_invite(bot, message, d_status, data)
+    elif d_status.startswith('crm_'):
+        return await process_dialog_crm(bot, message, d_status, data)
         
 
-asyncio.run(bot.polling(timeout=300, request_timeout=300, none_stop=True))
+async def main():
+    await asyncio.gather(
+        bot.db.connect(),
+        bot.polling(timeout=300, request_timeout=300, none_stop=True),
+    )
+
+asyncio.run(main())
+
+# asyncio.run(bot.polling(timeout=300, request_timeout=300, none_stop=True))
