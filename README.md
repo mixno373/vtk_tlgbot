@@ -80,4 +80,4 @@
 > - В кнопке "Найти" работает поиск по номеру телефона (основной либо дополнительный) и по имени/фамилии/отчеству/общей слейке
   
  График затрат за первые 150 дней:
-![График](https://github.com/mixno373/water_calc/blob/main/plot%20-%20150%20%D0%B4%D0%BD%D0%B5%D0%B9.png?raw=true)
+![График](https://github.com/mixno373/vtk_tlgbot/blob/main/reports/client_find_1.png?raw=true)
